@@ -1,0 +1,13 @@
+#!/bin/bash
+
+shopt -s globstar
+
+cd /images
+
+for i in **/*.pdf; do
+  filename=$(basename "$i")
+  dirname=$(dirname "$i")
+  newname="${filename%.*}"
+  echo "${i}"   
+  convert -density 150 "${i}" -background white -alpha remove -monochrome -compress lzw "${dirname}/${newname}.tiff"
+done
