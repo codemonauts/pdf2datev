@@ -4,6 +4,49 @@ shopt -s globstar
 
 cd /images
 
+# normalize filenames for DATEV
+for i in **/*.PDF; do
+  rename 'y/A-Z/a-z/' ${i}
+done
+
+for i in **/*.pdf; do
+  rename 's/ /\-/' ${i}
+done
+
+for i in **/*.pdf; do
+  rename 's/#/\-/' ${i}
+done
+
+for i in **/*.pdf; do
+  rename 's/_/\-/' ${i}
+done
+
+for i in **/*.pdf; do
+  rename 's/\//\-/' ${i}
+done
+
+for i in **/*.pdf; do
+  rename 's/ä/ae/' ${i}
+done
+
+for i in **/*.pdf; do
+  rename 's/ö/oe/' ${i}
+done
+
+for i in **/*.pdf; do
+  rename 's/ü/ue/' ${i}
+done
+
+for i in **/*.pdf; do
+  rename 's/ß/ss/' ${i}
+done
+
+# remove double dashes
+for i in **/*.pdf; do
+  rename 's/\-{2,}/\-/' ${i}
+done
+
+# convert PDFs to TIFFs
 for i in **/*.pdf; do
   filename=$(basename "$i")
   dirname=$(dirname "$i")
