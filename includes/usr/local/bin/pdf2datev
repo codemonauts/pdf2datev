@@ -6,44 +6,48 @@ cd /images
 
 # normalize filenames for DATEV
 for i in **/*.PDF; do
-  rename 'y/A-Z/a-z/' ${i}
+  rename -f 'y/A-Z/a-z/' "${i}"
 done
 
 for i in **/*.pdf; do
-  rename 's/ /\-/' ${i}
+  rename -f 'y/A-Z/a-z/' "${i}"
 done
 
 for i in **/*.pdf; do
-  rename 's/#/\-/' ${i}
+  rename -f 's/ /\-/g' "${i}"
 done
 
 for i in **/*.pdf; do
-  rename 's/_/\-/' ${i}
+  rename -f 's/#/\-/g' "${i}"
 done
 
 for i in **/*.pdf; do
-  rename 's/\//\-/' ${i}
+  rename -f 's/_/\-/g' "${i}"
 done
 
 for i in **/*.pdf; do
-  rename 's/ä/ae/' ${i}
+  rename -f 's/\//\-/g' "${i}"
 done
 
 for i in **/*.pdf; do
-  rename 's/ö/oe/' ${i}
+  rename -f 's/ä/ae/g' "${i}"
 done
 
 for i in **/*.pdf; do
-  rename 's/ü/ue/' ${i}
+  rename -f 's/ö/oe/g' "${i}"
 done
 
 for i in **/*.pdf; do
-  rename 's/ß/ss/' ${i}
+  rename -f 's/ü/ue/g' "${i}"
+done
+
+for i in **/*.pdf; do
+  rename -f 's/ß/ss/g' "${i}"
 done
 
 # remove double dashes
 for i in **/*.pdf; do
-  rename 's/\-{2,}/\-/' ${i}
+  rename -f 's/\-{2,}/\-/g' "${i}"
 done
 
 # convert PDFs to TIFFs
@@ -53,4 +57,7 @@ for i in **/*.pdf; do
   newname="${filename%.*}"
   echo "${i}"   
   convert -density 150 "${i}" -background white -alpha remove -monochrome -compress lzw "${dirname}/${newname}.tiff"
+  if [ $? -eq 0 ]; then
+    rm "${i}"
+  fi
 done
