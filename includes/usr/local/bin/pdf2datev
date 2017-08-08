@@ -45,6 +45,10 @@ for i in **/*.pdf; do
   rename -f 's/ß/ss/g' "${i}"
 done
 
+for i in **/*.pdf; do
+  rename -f 's/\&//g' "${i}"
+done
+
 # remove double dashes
 for i in **/*.pdf; do
   rename -f 's/\-{2,}/\-/g' "${i}"
